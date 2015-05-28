@@ -40,13 +40,34 @@ var romanizeLessThanFour = function(input) {
 var romanize = function(input) {
   var output = [];
   var workingInput = input;
-  for (counter = 1; counter <= Math.floor(input / i['M']); counter++) {
-    output.push("M");
-    workingInput -= i['M'];
+  for (var counter = 1; (counter <= Math.ceil(input / i['M'])); counter++) {
+    if (counter <= Math.floor(input / i['M'])) {
+      output.push("M");
+      workingInput -= i['M'];
+    } else if ( (input % 1000) >= 900) {
+      output.push("CM");
+      workingInput -= 900;
+    };
+  }
+  input = workingInput;
+  console.log(input);
+  for (counter = 1; counter <= Math.ceil(input / i['D']); counter++) {
+    if (counter <= Math.floor(input / i['D'])) {
+    output.push("D");
+    workingInput -= i['D'];
+  } else if ( (input % 500) >= 400 ) {
+    output.push("CD");
+    workingInput -= 400;
+  };
+  }
+  input = workingInput;
+
+  for (counter = 1; counter <= Math.floor(input / i['C']); counter++) {
+    output.push("C");
+    workingInput -= i['C'];
   }
   input = workingInput;
   
-
   return output.join("");
 };
 
