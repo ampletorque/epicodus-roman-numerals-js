@@ -1,11 +1,11 @@
-var n = new Object();
-n[1] = 'I';
-n[5] = 'V';
-n[10] = 'X';
-n[50] = 'L';
-n[100] = 'C';
-n[500] = 'D';
-n[1000] = 'M';
+// var n = new Object();
+// n[1] = 'I';
+// n[5] = 'V';
+// n[10] = 'X';
+// n[50] = 'L';
+// n[100] = 'C';
+// n[500] = 'D';
+// n[1000] = 'M';
 
 var i = new Object();
 i['I'] = 1;
@@ -41,6 +41,7 @@ var romanize = function(input) {
   var output = [];
   var workingInput = input;
 
+console.log("before M:", input);
   for (var counter = 1; (counter <= Math.ceil(input / i['M'])); counter++) {
     if (counter <= Math.floor(input / i['M'])) {
       output.push("M");
@@ -52,6 +53,7 @@ var romanize = function(input) {
   }
   input = workingInput;
 
+console.log("after M before D:", input);
   for (counter = 1; counter <= Math.ceil(input / i['D']); counter++) {
     if (counter <= Math.floor(input / i['D'])) {
     output.push("D");
@@ -62,17 +64,22 @@ var romanize = function(input) {
     };
   }
   input = workingInput;
-console.log("after M before C:", input);
+
+console.log("after D before C:", input);
+console.log("i[\'C\']:", i['C']);
+console.log(("Math.ceil(input / i[\'C\']):"), Math.ceil(input / i['C']));
+//
   for (counter = 1; counter <= Math.ceil(input / i['C']); counter++) {
     if (counter <= Math.floor(input / i['C'])) {
       output.push("C");
-      workingInput -=['C'];
+      workingInput -= i['C'];
     } else if ( (input % 100) >= 90 ) {
       output.push("XC");
       workingInput -= 90;
     };
   }
   input = workingInput;
+//
 console.log("after C before L:", input);
 for (counter = 1; counter <= Math.ceil(input / i['L']); counter++) {
   if (counter <= Math.floor(input / i['L'])) {
@@ -84,6 +91,7 @@ for (counter = 1; counter <= Math.ceil(input / i['L']); counter++) {
   };
 }
 input = workingInput;
+
 console.log("after L before X: ", input);
 for (counter = 1; counter <= Math.ceil(input / i['X']); counter++) {
   if (counter <= Math.floor(input / i['X'])) {
@@ -94,9 +102,9 @@ for (counter = 1; counter <= Math.ceil(input / i['X']); counter++) {
     workingInput -= 9;
   }
 }
-
 input = workingInput;
 
+console.log("after X before V: ", input);
 for (counter = 1; counter <= Math.ceil(input / i['V']); counter++) {
   if (counter <= Math.floor(input / i['V'])) {
     output.push("V");
@@ -106,56 +114,42 @@ for (counter = 1; counter <= Math.ceil(input / i['V']); counter++) {
     workingInput -= 4;
   }
 }
-
 input = workingInput;
 
+console.log("after V before I: ", input);
 for (counter = 1; counter <= Math.ceil(input / i['I']); counter++) {
   if (counter <= Math.floor(input / i['I'])) {
     output.push("I");
     workingInput -= i['I'];
   }
 }
-
 input = workingInput;
+console.log("after I: ", input);
 
   return output.join("");
 };
 
-// var countUpBy = function(input) {
-//   var number = input[1];
-//   var multiplier = input[0];
-//   var count = 1
-//   var output = []
-//   do {
-//     output.push(count * multiplier);
-//     count++;
-//   } while (count * multiplier <= number);
-// return output;
-// };
-//
-// $(document).ready(function() {
-//   $("form#count-up-form").submit(function(event) {
-//
-//     var counter = parseInt($("input#counter").val());
-//     var limit = parseInt($("input#limit").val());
-//
-//     results = countUpBy([counter, limit]);
-//
-//     // adds extra comma to output
-//     // results.forEach(function(result) {
-//     //   $(".resultreplace").append(result, ", ");
-//     // });
-//
-//     for (index = 1; index * counter <= limit; index++) {
-//
-//       if (index !== 1) {
-//         $(".resultreplace").append(", ");
-//       }
-//
-//       $(".resultreplace").append(results[index-1]);
-//      }
-//
-//     $("#resultdiv").show();
-//     event.preventDefault();
-//   });
-// });
+
+$(document).ready(function() {
+  $("form#roman-numeral-form").submit(function(event) {
+    //
+    // var counter = parseInt($("input#counter").val());
+    // var limit = parseInt($("input#limit").val());
+    //
+    // results = countUpBy([counter, limit]);
+    //
+    // for (index = 1; index * counter <= limit; index++) {
+    //
+    //   if (index !== 1) {
+    //     $(".resultreplace").append(", ");
+    //   }
+    //
+      // $(".resultreplace").append(results[index-1]);
+    //  }
+    // var incoming = $("input#number").val();
+    // var result = romanize($("input#number").val());
+    $(".resultreplace").text(romanize($("input#number").val()));
+    $("#resultdiv").show();
+    event.preventDefault();
+  });
+});
