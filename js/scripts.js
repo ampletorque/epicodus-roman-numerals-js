@@ -22,24 +22,25 @@ i['M'] = 1000;
 // //  }
 // }
 
-var romanizeLessThanFour = function(input) {
-  var output = [];
-  if (input < 4) {
-    for (var index = 1; index <= input; index++) {
-      output.push(n[1]);
-    };
-  } else if (input === (5-1)) {
-    output.push(n[1]);
-    output.push(n[5]);
-  } else if (input === (5)) {
-    output.push(n[5]);
-  }
-  return output.join("");
-};
+// var romanizeLessThanFour = function(input) {
+//   var output = [];
+//   if (input < 4) {
+//     for (var index = 1; index <= input; index++) {
+//       output.push(n[1]);
+//     };
+//   } else if (input === (5-1)) {
+//     output.push(n[1]);
+//     output.push(n[5]);
+//   } else if (input === (5)) {
+//     output.push(n[5]);
+//   }
+//   return output.join("");
+// };
 
 var romanize = function(input) {
   var output = [];
   var workingInput = input;
+
   for (var counter = 1; (counter <= Math.ceil(input / i['M'])); counter++) {
     if (counter <= Math.floor(input / i['M'])) {
       output.push("M");
@@ -50,24 +51,73 @@ var romanize = function(input) {
     };
   }
   input = workingInput;
-  console.log(input);
+
   for (counter = 1; counter <= Math.ceil(input / i['D']); counter++) {
     if (counter <= Math.floor(input / i['D'])) {
     output.push("D");
     workingInput -= i['D'];
-  } else if ( (input % 500) >= 400 ) {
-    output.push("CD");
-    workingInput -= 400;
+    } else if ( (input % 500) >= 400 ) {
+      output.push("CD");
+      workingInput -= 400;
+    };
+  }
+  input = workingInput;
+console.log("after M before C:", input);
+  for (counter = 1; counter <= Math.ceil(input / i['C']); counter++) {
+    if (counter <= Math.floor(input / i['C'])) {
+      output.push("C");
+      workingInput -=['C'];
+    } else if ( (input % 100) >= 90 ) {
+      output.push("XC");
+      workingInput -= 90;
+    };
+  }
+  input = workingInput;
+console.log("after C before L:", input);
+for (counter = 1; counter <= Math.ceil(input / i['L']); counter++) {
+  if (counter <= Math.floor(input / i['L'])) {
+    output.push("L");
+    workingInput -= i['L'];
+  } else if ( (input % 50) >= 40 ) {
+    output.push("XL");
+    workingInput -= 40;
   };
+}
+input = workingInput;
+console.log("after L before X: ", input);
+for (counter = 1; counter <= Math.ceil(input / i['X']); counter++) {
+  if (counter <= Math.floor(input / i['X'])) {
+    output.push("X");
+    workingInput -= i['X'];
+  } else if ( (input % 10) >= 9 ) {
+    output.push("IX");
+    workingInput -= 9;
   }
-  input = workingInput;
+}
 
-  for (counter = 1; counter <= Math.floor(input / i['C']); counter++) {
-    output.push("C");
-    workingInput -= i['C'];
+input = workingInput;
+
+for (counter = 1; counter <= Math.ceil(input / i['V']); counter++) {
+  if (counter <= Math.floor(input / i['V'])) {
+    output.push("V");
+    workingInput -= i['V'];
+  } else if ( (input % 5) >= 4 ) {
+    output.push("IV");
+    workingInput -= 4;
   }
-  input = workingInput;
-  
+}
+
+input = workingInput;
+
+for (counter = 1; counter <= Math.ceil(input / i['I']); counter++) {
+  if (counter <= Math.floor(input / i['I'])) {
+    output.push("I");
+    workingInput -= i['I'];
+  }
+}
+
+input = workingInput;
+
   return output.join("");
 };
 
